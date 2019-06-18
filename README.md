@@ -12,6 +12,8 @@ simple *binary* codes, *left-most minimal* codes and *centered minimal* codes.
 Additionally, the implementation is *run-aware*, i.e.,
 it optimizes encoding/decoding of runs of consecutive identifiers.
 
+All details and experiments are provided in the following [technical report](http://pages.di.unipi.it/pibiri/papers/BIC.pdf) [2]
+
 ##### Table of contents
 * [Compiling the code](#compiling-the-code)
 * [Quick Start](#quick-start)
@@ -182,4 +184,5 @@ Author
 
 References
 -------
-* [1] Alistair Moffat and Lang Stuiver. 2000. Binary Interpolative Coding for Effective Index Compression. Information Retrieval Journal 3, 1 (2000), 25 – 47.
+* [1] Alistair Moffat and Lang Stuiver. 2000. *Binary Interpolative Coding for Effective Index Compression*. Information Retrieval Journal 3, 1 (2000), 25 – 47.
+* [2] Giulio Ermanno Pibiri. 2019. *On Implementing the Binary Interpolative Coding Algorithm*. Technical report. [http://pages.di.unipi.it/pibiri/papers/BIC.pdf](http://pages.di.unipi.it/pibiri/papers/BIC.pdf)
