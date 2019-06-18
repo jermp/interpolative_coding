@@ -1,0 +1,3 @@
+[submodule "external/mm_file"]
+	path = external/mm_file
+	url = https://github.com/jermp/mm_file.git
