@@ -29,7 +29,7 @@ The code is tested on Linux with `gcc` 7.3.0 and on Mac 10.14 with `clang` 10.0.
 To build the code, [`CMake`](https://cmake.org/) is required.
 
 Clone the repository with
-	
+
 	$ git clone --recursive https://github.com/jermp/interpolative_coding.git
 
 If you have cloned the repository without `--recursive`, you will need to perform the following commands before
@@ -156,7 +156,7 @@ To check correctness of the implementation, use:
 
 	$ ./check leftmost_minimal ../data/test_collection.docs test.bin
 
-which will compare every decode integer against the input collection.
+which will compare every decoded integer against the input collection.
 
 Benchmark
 ------
@@ -167,16 +167,20 @@ We report the average number of bits per integer (bpi)
 and nanoseconds spent per decoded integer (with and without the
 run-aware optimization).
 
-Time measurements were taken using a Linux 4.4.0 server machine with
-an Intel i7-7700 CPU (@3.6 GHz) and 64 GB of RAM.
-The code was compiled with gcc 7.3.0 with all optimizations
+We used two different Intel processors: i7-7700
+and i9-9900K, both clocked at 3.6 GHz and having 32K L1 caches for
+instructions and data.
+Both systems run Linux 4.4.0 and have 64 GB on RAM.
+The code was compiled with gcc 7.3.0 on the first
+system; with gcc 8.3.0 on the second.
+In both cases we used all optimizations 
 (see also `CMakeLists.txt`).
 
-|**Method**        |**bpi** | **ns/int (run-aware)**  | **ns/int (not run-aware)**|
-|:-----------------|:------:|:-----------------------:|:-------------------------:|
-|simple            |3.532   | 3.45                    | 4.65                      |
-|left-most minimal |3.362   | 5.78                    | 7.07                      |
-|centered minimal  |3.361   | 5.78                    | 7.07                      |
+|**Method**        |**bpi** | **ns/int (run-aware) on i7-7700**  | **ns/int (not run-aware) on i7-7700**| **ns/int (run-aware) on i9-9900K** | **ns/int (not run-aware) on i9-9900K**|
+|:-----------------|:------:|:------------------:|:------:|:-----:|:-----:|
+|simple            |3.532   | 3.45               | 4.65   | 2.52  | 3.37  | 
+|left-most minimal |3.362   | 5.78               | 7.07   | 4.18  | 5.28  |
+|centered minimal  |3.361   | 5.78               | 7.07   | 4.24  | 5.33  |
 
 Author
 ------
