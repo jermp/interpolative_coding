@@ -25,7 +25,7 @@ All details and experiments are provided in the following [technical report](htt
 Compiling the code
 ------------------
 
-The code is tested on Linux with `gcc` 7.3.0 and on Mac 10.14 with `clang` 10.0.0.
+The code is tested on Linux with `gcc` 7.3.0, 8.3.0, 9.2.1 and on Mac 10.14 with `clang` 10.0.0.
 To build the code, [`CMake`](https://cmake.org/) is required.
 
 Clone the repository with
@@ -173,12 +173,12 @@ instructions and data.
 Both systems run Linux 4.4.0 and have 64 GB on RAM.
 The code was compiled with gcc 7.3.0 on the first
 system; with gcc 8.3.0 on the second.
-In both cases we used all optimizations 
+In both cases we used all optimizations
 (see also `CMakeLists.txt`).
 
 |**Method**        |**bpi** | **ns/int (run-aware) on i7-7700**  | **ns/int (not run-aware) on i7-7700**| **ns/int (run-aware) on i9-9900K** | **ns/int (not run-aware) on i9-9900K**|
 |:-----------------|:------:|:------------------:|:------:|:-----:|:-----:|
-|simple            |3.532   | 3.45               | 4.65   | 2.52  | 3.37  | 
+|simple            |3.532   | 3.45               | 4.65   | 2.52  | 3.37  |
 |left-most minimal |3.362   | 5.78               | 7.07   | 4.18  | 5.28  |
 |centered minimal  |3.361   | 5.78               | 7.07   | 4.24  | 5.33  |
 

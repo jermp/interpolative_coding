@@ -84,9 +84,7 @@ struct binary {
 #if RUNAWARE
             assert(r > 0);
 #else
-            if (!r) {
-                return;
-            }
+            if (!r) return;
 #endif
             assert(x <= r);
             uint32_t b = msb(r) + 1;
@@ -118,14 +116,11 @@ struct leftmost_minimal {
 #if RUNAWARE
             assert(r > 0);
 #else
-            if (!r) {
-                return;
-            }
+            if (!r) return;
 #endif
             assert(x <= r);
-            uint32_t n = r + 1;
-            uint32_t b = msb(n);
-            uint32_t hi = (uint64_t(1) << (b + 1)) - n;
+            uint32_t b = msb(r);
+            uint32_t hi = (uint64_t(1) << (b + 1)) - r - 1;
             if (x < hi) {
                 append(x, b);
             } else {
@@ -146,13 +141,10 @@ struct leftmost_minimal {
 #else
             if (!r) return 0;
 #endif
-            uint32_t n = r + 1;
-            uint32_t b = msb(n);
-            uint32_t hi = (uint64_t(1) << (b + 1)) - n;
+            uint32_t b = msb(r);
+            uint32_t hi = (uint64_t(1) << (b + 1)) - r - 1;
             uint32_t x = take(b);
-            if (x >= hi) {
-                x = (x << 1) + take(1) - hi;
-            }
+            if (x >= hi) x = (x << 1) + take(1) - hi;
             assert(x <= r);
             return x;
         }
@@ -165,23 +157,16 @@ struct centered_minimal {
 #if RUNAWARE
             assert(r > 0);
 #else
-            if (!r) {
-                return;
-            }
+            if (!r) return;
 #endif
-            uint32_t n = r + 1;
-            uint32_t b = msb(n);
-            uint32_t c = (uint64_t(1) << (b + 1)) - n;
-
+            uint32_t b = msb(r);
+            uint32_t c = (uint64_t(1) << (b + 1)) - r - 1;
             int64_t half_c = c / 2;
             int64_t half_r = r / 2;
             int64_t lo, hi;
             lo = half_r - half_c;
             hi = half_r + half_c + 1;
-            if (n % 2) {
-                lo -= 1;
-            }
-
+            if (r % 2 == 0) lo -= 1;
             if (x > lo and x < hi) {
                 append(x, b);
             } else {
@@ -200,23 +185,15 @@ struct centered_minimal {
 #else
             if (!r) return 0;
 #endif
-            uint32_t n = r + 1;
-            uint32_t b = msb(n);
-            uint32_t c = (uint64_t(1) << (b + 1)) - n;
-
+            uint32_t b = msb(r);
+            uint32_t c = (uint64_t(1) << (b + 1)) - r - 1;
             int64_t half_c = c / 2;
             int64_t half_r = r / 2;
-            int64_t lo, hi;
+            int64_t lo;
             lo = half_r - half_c;
-            hi = half_r + half_c + 1;
-            if (n % 2) {
-                lo -= 1;
-            }
-
+            if (r % 2 == 0) lo -= 1;
             uint32_t x = take(b);
-            if (x <= lo or x >= hi) {
-                x += take(1) << b;
-            }
+            if (x <= lo) x += take(1) << b;
             assert(x <= r);
             return x;
         }
@@ -249,9 +226,7 @@ private:
     void encode(uint32_t const* input, uint32_t n, uint32_t lo, uint32_t hi) {
         if (!n) return;
 #if RUNAWARE
-        if (hi - lo + 1 == n) {  // run
-            return;
-        }
+        if (hi - lo + 1 == n) return;  // run
 #endif
         assert(lo <= hi);
         assert(hi - lo >= n - 1);
@@ -297,9 +272,7 @@ private:
         assert(lo <= hi);
 #if RUNAWARE
         if (hi - lo + 1 == n) {  // run
-            for (uint32_t i = 0; i != n; ++i) {
-                out[i] = lo + i;
-            }
+            for (uint32_t i = 0; i != n; ++i) out[i] = lo++;
             return;
         }
 #endif
