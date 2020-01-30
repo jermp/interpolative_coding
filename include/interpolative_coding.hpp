@@ -202,11 +202,11 @@ struct centered_minimal {
 
 template <typename Writer>
 struct encoder {
-    void encode(uint32_t const* input, uint32_t n) {
+    void encode(uint32_t const* input, uint32_t n, bool write_size = true) {
         if (!n) return;
         uint32_t universe = input[n - 1];
         write_binary(universe);
-        write_binary(n);
+        if (write_size) write_binary(n);
         encode(input, n - 1, 0, universe);
     }
 
@@ -256,6 +256,13 @@ struct decoder {
     uint32_t decode(uint32_t* out) {
         uint32_t universe = read_binary();
         uint32_t n = read_binary();
+        out[n - 1] = universe;
+        decode(out, n - 1, 0, universe);
+        return n;
+    }
+
+    uint32_t decode(uint32_t* out, uint32_t n) {
+        uint32_t universe = read_binary();
         out[n - 1] = universe;
         decode(out, n - 1, 0, universe);
         return n;

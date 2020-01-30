@@ -11,26 +11,49 @@ void test(std::vector<uint32_t> const& in) {
     }
     std::cout << std::endl;
 
-    uint32_t n = in.size();
+    {
+        uint32_t n = in.size();
+        encoder<typename BinaryCode::writer> enc;
+        enc.encode(in.data(), n);  // save n by feault
+        std::vector<uint32_t> out(n);
+        decoder<typename BinaryCode::reader> dec;
+        uint32_t m = dec.decode(enc.bits().data(), out.data());
+        assert(m == n);
 
-    encoder<typename BinaryCode::writer> enc;
-    enc.encode(in.data(), n);
+        std::cout << "decoded " << m << " values" << std::endl;
+        std::cout << "total bits " << enc.num_bits() << std::endl;
+        std::cout << static_cast<double>(enc.num_bits()) / m << " bits x key"
+                  << std::endl;
 
-    std::vector<uint32_t> out(n);
-    decoder<typename BinaryCode::reader> dec;
-    uint32_t m = dec.decode(enc.bits().data(), out.data());
-    assert(m == n);
-
-    std::cout << "decoded " << m << " values" << std::endl;
-    std::cout << "total bits " << enc.num_bits() << std::endl;
-    std::cout << static_cast<double>(enc.num_bits()) / m << " bits x key"
-              << std::endl;
-
-    std::cout << "decoded:\n";
-    for (auto x : out) {
-        std::cout << x << " ";
+        std::cout << "decoded:\n";
+        for (auto x : out) {
+            std::cout << x << " ";
+        }
+        std::cout << std::endl;
     }
-    std::cout << std::endl;
+
+    {
+        uint32_t n = in.size();
+        encoder<typename BinaryCode::writer> enc;
+        enc.encode(in.data(), n,
+                   false  // do not save n
+        );
+        std::vector<uint32_t> out(n);
+        decoder<typename BinaryCode::reader> dec(enc.bits().data());
+        uint32_t m = dec.decode(out.data(), n);
+        assert(m == n);
+
+        std::cout << "decoded " << m << " values" << std::endl;
+        std::cout << "total bits " << enc.num_bits() << std::endl;
+        std::cout << static_cast<double>(enc.num_bits()) / m << " bits x key"
+                  << std::endl;
+
+        std::cout << "decoded:\n";
+        for (auto x : out) {
+            std::cout << x << " ";
+        }
+        std::cout << std::endl;
+    }
 }
 
 int main(int argc, char** argv) {
