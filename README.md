@@ -30,29 +30,29 @@ To build the code, [`CMake`](https://cmake.org/) is required.
 
 Clone the repository with
 
-	$ git clone --recursive https://github.com/jermp/interpolative_coding.git
+	git clone --recursive https://github.com/jermp/interpolative_coding.git
 
 If you have cloned the repository without `--recursive`, you will need to perform the following commands before
 compiling:
 
-    $ git submodule init
-    $ git submodule update
+    git submodule init
+    git submodule update
 
 To compile the code for a release environment *and* best performance (see file `CMakeLists.txt` for the used compilation flags), do:
 
-    $ mkdir build
-    $ cd build
-    $ cmake .. -DRUNAWARE=On
-    $ make
+    mkdir build
+    cd build
+    cmake .. -DRUNAWARE=On
+    make
 
 Hint: Use `make -j4` to compile the library in parallel using, e.g., 4 jobs.
 
 For a testing environment, use the following instead:
 
-    $ mkdir debug_build
-    $ cd debug_build
-    $ cmake .. -DCMAKE_BUILD_TYPE=Debug -DUSE_SANITIZERS=On
-    $ make
+    mkdir debug_build
+    cd debug_build
+    cmake .. -DCMAKE_BUILD_TYPE=Debug -DUSE_SANITIZERS=On
+    make
 
 Quick Start
 -------
@@ -60,7 +60,7 @@ Quick Start
 For a quick start, see the source file `test/example.cpp`.
 After compilation, run this example with
 
-	$ ./example
+	./example
 
 A simpler variation is shown below.
 
@@ -146,15 +146,15 @@ such organization.
 
 To encode all the sequences from this file, do:
 
-	$ ./encode leftmost_minimal ../data/test_collection.docs -o test.bin
+	./encode leftmost_minimal ../data/test_collection.docs -o test.bin
 
 To decode all the sequences from the encoded file `test.bin`, do:
 
-	$ ./decode leftmost_minimal test.bin
+	./decode leftmost_minimal test.bin
 
 To check correctness of the implementation, use:
 
-	$ ./check leftmost_minimal ../data/test_collection.docs test.bin
+	./check leftmost_minimal test.bin ../data/test_collection.docs
 
 which will compare every decoded integer against the input collection.
 
