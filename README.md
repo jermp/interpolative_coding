@@ -1,5 +1,3 @@
-[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/jermp/interpolative_coding.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jermp/interpolative_coding/context:cpp)
-
 Binary Interpolative Coding
 ===========================
 
